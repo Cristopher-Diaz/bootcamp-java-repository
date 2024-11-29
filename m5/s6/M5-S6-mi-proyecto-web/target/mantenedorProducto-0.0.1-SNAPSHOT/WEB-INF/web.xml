@@ -1,0 +1,22 @@
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
+    <display-name>Mi Proyecto Web</display-name>
+
+    <!-- Configuración de Servlets -->
+    <servlet>
+        <servlet-name>ProductoController</servlet-name>
+        <servlet-class>com.ejemplo.controller.ProductoController</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProductoController</servlet-name>
+        <url-pattern>/productos</url-pattern>
+    </servlet-mapping>
+
+    <!-- Página de bienvenida -->
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>

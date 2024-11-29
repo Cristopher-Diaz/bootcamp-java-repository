@@ -1,0 +1,4 @@
+com\ejemplo\util\HibernateUtil.class
+com\ejemplo\controller\ProductoController.class
+com\ejemplo\model\Producto.class
+com\ejemplo\model\ProductoDAO.class

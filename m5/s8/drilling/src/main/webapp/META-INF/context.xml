@@ -1,0 +1,13 @@
+<Context>
+    <Resource
+        name="jdbc/simple_users_db"
+        auth="Container"
+        type="javax.sql.DataSource"
+        driverClassName="com.mysql.cj.jdbc.Driver"
+        url="jdbc:mysql://localhost:3306/simple_users_db"
+        username="root"
+        password="admin123"
+        maxTotal="20"
+        maxIdle="10"
+        maxWaitMillis="10000" />
+</Context>

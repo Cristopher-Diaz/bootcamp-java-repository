@@ -1,0 +1,25 @@
+<hibernate-configuration>
+    <session-factory>
+        <!-- Configuración de la base de datos -->
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/tu_base_de_datos</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">admin123</property>
+
+        <!-- Dialecto de Hibernate -->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+
+        <!-- Configuraciones adicionales -->
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.dialect_resolvers">org.hibernate.engine.jdbc.dialect.internal.StandardDialectResolver</property>
+
+        <!-- Configuración del pool de conexiones -->
+        <property name="hibernate.connection.pool_size">10</property>
+
+        <!-- Clases anotadas -->
+        <mapping class="com.ejemplo.model.Producto"/>
+        <!-- Agrega más clases mapeadas según tu proyecto -->
+    </session-factory>
+</hibernate-configuration>
