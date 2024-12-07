@@ -37,31 +37,38 @@
 			</td>
 			<td><form action="Servlet" method="post">
 				<div class="mb-3">
-					<label for="nombre" class="form-label">Número Departamento</label> <input
-						type="text" class="form-control" id="nombre" name="nombre">
+					<label for="numero" class="form-label">Número Departamento</label> <input
+						type="text" class="form-control" id="numero" name="numero">
 				</div>
 				<div class="mb-3">
 					<button type="submit"
-						class="btn btn-primary">Filtrar</button>
+						class="btn btn-primary" name="accion" value="filtroNumero">Filtrar</button>
 				</div>
 
 			</form></td>
 			<td><form action="Servlet" method="post">
 				<div class="mb-3">
-					<label for="nombre" class="form-label">Ubicación Departamento</label> <input
-						type="text" class="form-control" id="nombre" name="nombre">
-				</div>
+					<label for="nombre" class="form-label">Ubicación </label> 
+					
+					<select class="form-select" name="ubicacionDepto">
+						<c:forEach items="${ubicaciones}" var="ubicacion">
+							<option value="${ubicacion}">${ubicacion}</option>
+						</c:forEach>	
+					</select>
+
+							</div>
 				<div class="mb-3">
 					<button type="submit"
-						class="btn btn-primary">Filtrar</button>
+						class="btn btn-primary"  name="accion" value="filtroUbicacion">Filtrar</button>
 				</div>
 
 			</form></td>
 			</tr>
+			
             </table>
             <br><br>
 
-
+            <a href="Servlet?opcion=listar">Quitar Filtros</a>
 			<table class="table table-striped">
 				<thead>
 					<tr>

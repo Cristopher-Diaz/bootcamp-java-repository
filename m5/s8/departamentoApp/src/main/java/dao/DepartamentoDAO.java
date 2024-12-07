@@ -13,59 +13,188 @@ import utils.GeneraPoolConexion;
 
 public class DepartamentoDAO {
 
-	public List<Departamento> listAll() {
+	public List<Departamento> listar() {
 
-		List<Departamento> departments = new ArrayList<>();
-		String sql = "SELECT " + "d.department_number, " + "INITCAP(d.department_name) AS department_name, "
-				+ "INITCAP(l.name) AS location_name " + "FROM department d "
-				+ "JOIN location l ON d.location_id = l.id " + "WHERE d.deleted_at IS NULL";
+		List<Departamento> departamentos = new ArrayList<>();
+		String sql = "SELECT \r\n" + "NUMDEPTO,\r\n" + "INITCAP(NOMDEPTO) AS NOMDEPTO,\r\n"
+				+ "INITCAP(NOMBRE) AS NOMBRE\r\n" + "FROM DEPARTAMENTO JOIN UBICACION\r\n" + "ON(UBICACIONDPTO = ID)";
 
-		try (Connection conn = GeneraPoolConexion.getConexion();
-				Statement stmt = conn.createStatement();
-				ResultSet rs = stmt.executeQuery(sql)) {
+		Connection conn = null;
+		Statement stmt = null;
+
+		try {
+
+			// conectar a la BD
+			conn = GeneraPoolConexion.getConexion();
+
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
-				int departmentNumber = rs.getInt("department_number");
-				String departmentName = rs.getString("department_name");
-				String locationName = rs.getString("location_name");
+				int numero = rs.getInt("numdepto");
+				String nombre = rs.getString("nomdepto");
+				String nombreUbicacion = rs.getString("nombre");
 
-				Ubicacion location = new Ubicacion(locationName);
-				Departamento department = new Departamento(departmentNumber, departmentName, location);
-				departments.add(department);
+				Ubicacion u = new Ubicacion(nombreUbicacion);
+				Departamento d = new Departamento(numero, nombre, u);
+				departamentos.add(d);
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+
 		}
 
-		return departments;
+		return departamentos;
+
 	}
 
-	public List<Departamento> filterByName(String name) {
-		List<Departamento> departments = new ArrayList<>();
-		String sql = "SELECT " + "d.department_number, " + "INITCAP(d.department_name) AS department_name, "
-				+ "INITCAP(l.name) AS location_name " + "FROM department d "
-				+ "JOIN location l ON d.location_id = l.id " + "WHERE d.deleted_at IS NULL AND d.department_name = '"
-				+ name.toUpperCase() + "'";
+	public List<Departamento> filtroNombre(String nombre) {
+		List<Departamento> departamentos = new ArrayList<>();
+		String sql = "SELECT \r\n"
+				+ "NUMDEPTO,\r\n"
+				+ "INITCAP(NOMDEPTO) AS NOMDEPTO,\r\n"
+				+ "INITCAP(NOMBRE) AS NOMBRE\r\n"
+				+ "FROM DEPARTAMENTO JOIN UBICACION\r\n"
+				+ "ON(UBICACIONDPTO = ID)\r\n"
+				+ "WHERE nomdepto = '" + nombre.toUpperCase() + "'";
 
-		try (Connection conn = GeneraPoolConexion.getConexion();
-				Statement stmt = conn.createStatement();
-				ResultSet rs = stmt.executeQuery(sql)) {
+		Connection conn = null;
+		Statement stmt = null;
+
+		try {
+
+			// conectar a la BD
+			conn = GeneraPoolConexion.getConexion();
+
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
-				int departmentNumber = rs.getInt("department_number");
-				String departmentName = rs.getString("department_name");
-				String locationName = rs.getString("location_name");
+				int numero = rs.getInt("numdepto");
+				String nombreDepto = rs.getString("nomdepto");
+				String nombreUbicacion = rs.getString("nombre");
 
-				Ubicacion location = new Ubicacion(locationName);
-				Departamento department = new Departamento(departmentNumber, departmentName, location);
-				departments.add(department);
+				Ubicacion u = new Ubicacion(nombreUbicacion);
+				Departamento d = new Departamento(numero, nombreDepto, u);
+				departamentos.add(d);
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+
 		}
 
-		return departments;
+		return departamentos;
 	}
+	
+	public List<Departamento> filtroNumero(int num) {
+		List<Departamento> departamentos = new ArrayList<>();
+		String sql = "SELECT \r\n"
+				+ "NUMDEPTO,\r\n"
+				+ "INITCAP(NOMDEPTO) AS NOMDEPTO,\r\n"
+				+ "INITCAP(NOMBRE) AS NOMBRE\r\n"
+				+ "FROM DEPARTAMENTO JOIN UBICACION\r\n"
+				+ "ON(UBICACIONDPTO = ID)\r\n"
+				+ "WHERE numdepto =" + num;
+
+		Connection conn = null;
+		Statement stmt = null;
+
+		try {
+
+			// conectar a la BD
+			conn = GeneraPoolConexion.getConexion();
+
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				int numero = rs.getInt("numdepto");
+				String nombreDepto = rs.getString("nomdepto");
+				String nombreUbicacion = rs.getString("nombre");
+
+				Ubicacion u = new Ubicacion(nombreUbicacion);
+				Departamento d = new Departamento(numero, nombreDepto, u);
+				departamentos.add(d);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		}
+
+		return departamentos;
+	}
+
+	public List<String> getUbicaciones(){
+		
+		List<String> ubicaciones = new ArrayList<>();
+		
+		String sql = "select nombre from ubicacion";
+
+		Connection conn = null;
+		Statement stmt = null;
+
+		try {
+
+			// conectar a la BD
+			conn = GeneraPoolConexion.getConexion();
+
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				String nombre = rs.getString("nombre");
+				
+				ubicaciones.add(nombre);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		}
+
+		return ubicaciones;
+	}
+
+	public List<Departamento> filtroUbicacion(String ubicacion) {
+		List<Departamento> departamentos = new ArrayList<>();
+		String sql = "SELECT \r\n"
+				+ "NUMDEPTO,\r\n"
+				+ "INITCAP(NOMDEPTO) AS NOMDEPTO,\r\n"
+				+ "INITCAP(NOMBRE) AS NOMBRE\r\n"
+				+ "FROM DEPARTAMENTO JOIN UBICACION\r\n"
+				+ "ON(UBICACIONDPTO = ID)\r\n"
+				+ "WHERE nombre = '" + ubicacion.toUpperCase() + "'";
+
+		Connection conn = null;
+		Statement stmt = null;
+
+		try {
+
+			// conectar a la BD
+			conn = GeneraPoolConexion.getConexion();
+
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				int numero = rs.getInt("numdepto");
+				String nombreDepto = rs.getString("nomdepto");
+				String nombreUbicacion = rs.getString("nombre");
+
+				Ubicacion u = new Ubicacion(nombreUbicacion);
+				Departamento d = new Departamento(numero, nombreDepto, u);
+				departamentos.add(d);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		}
+
+		return departamentos;
+	}
+	
 }

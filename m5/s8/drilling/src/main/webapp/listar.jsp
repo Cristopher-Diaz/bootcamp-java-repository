@@ -21,14 +21,6 @@
 			<br>
 			<h1>Listado de Departamento</h1>
 			<br>
-			<!-- Botón para restablecer el listado -->
-			<div class="mb-3 text-end">
-				<form action="Servlet" method="get">
-					<button type="submit" class="btn btn-secondary" name="opcion"
-						value="listar">Restablecer listado</button>
-				</form>
-			</div>
-
 			<table>
 				<tr>
 					<td><form action="Servlet" method="post">
@@ -41,32 +33,41 @@
 								<button type="submit" class="btn btn-primary" name="accion"
 									value="filtroNombre">Filtrar</button>
 							</div>
+
 						</form></td>
 					<td><form action="Servlet" method="post">
 							<div class="mb-3">
-								<label for="nombre" class="form-label">Número
+								<label for="numero" class="form-label">Número
 									Departamento</label> <input type="text" class="form-control"
-									id="nombre" name="nombre">
+									id="numero" name="numero">
 							</div>
 							<div class="mb-3">
-								<button type="submit" class="btn btn-primary">Filtrar</button>
+								<button type="submit" class="btn btn-primary" name="accion"
+									value="filtroNumero">Filtrar</button>
 							</div>
+
 						</form></td>
 					<td><form action="Servlet" method="post">
 							<div class="mb-3">
-								<label for="nombre" class="form-label">Ubicación
-									Departamento</label> <input type="text" class="form-control"
-									id="nombre" name="nombre">
+								<label for="nombre" class="form-label">Ubicación </label> <select
+									class="form-select" name="ubicacionDepto">
+									<c:forEach items="${ubicaciones}" var="ubicacion">
+										<option value="${ubicacion}">${ubicacion}</option>
+									</c:forEach>
+								</select>
+
 							</div>
 							<div class="mb-3">
-								<button type="submit" class="btn btn-primary">Filtrar</button>
+								<button type="submit" class="btn btn-primary" name="accion"
+									value="filtroUbicacion">Filtrar</button>
 							</div>
+
 						</form></td>
 				</tr>
-			</table>
-			<br>
-			<br>
 
+			</table>
+			<br> <br> <a href="Servlet?opcion=listar">Quitar
+				Filtros</a>
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -88,6 +89,5 @@
 			</table>
 			<br>
 		</div>
-	</div>
 </body>
 </html>

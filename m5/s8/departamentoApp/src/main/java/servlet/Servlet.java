@@ -52,11 +52,7 @@ public class Servlet extends HttpServlet {
 			throws ServletException, IOException{
 		
 		List<Departamento> departamentos = departamentoDAO.listar();
-
-		request.setAttribute("departamentos", departamentos);
-
-		RequestDispatcher dispatcher = request.getRequestDispatcher("listar.jsp");
-		dispatcher.forward(request, response);
+		invocarListar(departamentos, request, response);
 		
 	}
 
@@ -71,7 +67,33 @@ public class Servlet extends HttpServlet {
 		
 		case "filtroNombre":  filtroNombre(request, response);
 			                  break;
+		case "filtroNumero":  filtroNumero(request, response);
+                               break;
+		case "filtroUbicacion":  filtroUbicacion(request, response);
+                               break;
 		}
+		
+	}
+
+	private void filtroUbicacion(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException{
+	
+        String ubicacion = request.getParameter("ubicacionDepto");
+		
+		List<Departamento> deptoFiltrado = departamentoDAO.filtroUbicacion(ubicacion);
+		
+		invocarListar(deptoFiltrado, request, response);
+		
+	}
+
+	private void filtroNumero(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException{
+        
+		int numero = Integer.parseInt(request.getParameter("numero"));
+		
+		List<Departamento> deptoFiltrado = departamentoDAO.filtroNumero(numero);
+		
+		invocarListar(deptoFiltrado, request, response);
 		
 	}
 
@@ -82,10 +104,23 @@ public class Servlet extends HttpServlet {
 		
 		List<Departamento> deptoFiltrado = departamentoDAO.filtroNombre(nombre);
 		
-		request.setAttribute("departamentos", deptoFiltrado);
+		invocarListar(deptoFiltrado, request, response);
+	}
+
+	private void invocarListar(List<Departamento> departamentos, HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException{
+		
+		//obtener listado de ubicaciones
+		List<String> ubicaciones = departamentoDAO.getUbicaciones();
+		
+		request.setAttribute("departamentos", departamentos);
+		request.setAttribute("ubicaciones", ubicaciones);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("listar.jsp");
 		dispatcher.forward(request, response);
+				
 	}
-
+	
+	
+	
 }
